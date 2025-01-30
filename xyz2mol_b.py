@@ -3,8 +3,8 @@
 name   : xyz2mol_b.py
 author : nbehrnd@yahoo.com
 license: GPL2
-date   : <2023-08-08 Tue>
-edit   :
+date   : [2023-08-08 Tue]
+edit   : [2025-01-30 Thu]
 purpose: a modernized xyz2mol interface to RDKit 2023.03.2, or greater
 """
 
@@ -19,22 +19,26 @@ def get_args():
     """get arguments from the CLI"""
 
     parser = argparse.ArgumentParser(
-        description=
-        "convert a xyz geometry into a .sdf file with RDKit 2023.03.2, or greater",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        description="convert a xyz geometry into a .sdf file with RDKit 2023.03.2, or greater",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
 
-    parser.add_argument("file",
-                        help=".xyz input file to process",
-                        metavar="FILE",
-                        type=argparse.FileType("rt"),
-                        default=None)
+    parser.add_argument(
+        "file",
+        help=".xyz input file to process",
+        metavar="FILE",
+        type=argparse.FileType("rt"),
+        default=None,
+    )
 
-    parser.add_argument("-c",
-                        "--charge",
-                        help="charge globally attributed to the structure",
-                        metavar="int",
-                        type=int,
-                        default=0)
+    parser.add_argument(
+        "-c",
+        "--charge",
+        help="charge globally attributed to the structure",
+        metavar="int",
+        type=int,
+        default=0,
+    )
 
     return parser.parse_args()
 
