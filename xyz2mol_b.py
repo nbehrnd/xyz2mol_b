@@ -3,8 +3,8 @@
 name   : xyz2mol_b.py
 author : nbehrnd@yahoo.com
 license: GPL2
-date   : <2023-08-08 Tue>
-edit   :
+date   : [2023-08-08 Tue]
+edit   : [2025-01-30 Thu]
 purpose: a modernized xyz2mol interface to RDKit 2023.03.2, or greater
 """
 
