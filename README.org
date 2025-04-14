@@ -1,8 +1,11 @@
 #+OPTIONS: toc:nil ^:nil
+
+#+begin_export html
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+#+end_export
+
+
 * intent
-  :PROPERTIES:
-  :ID:       733be919-d781-4101-b458-54a26c5b82e7
-  :END:
 
   Given an input structure as .xyz file, the moderator script ~xyz2mol_b.py~
   provides a representation in the .sdf format.  The user is expected to
@@ -20,44 +23,45 @@ pip -r install requirements.txt
   #+begin_src shell :results nil :tangle no
 python ./xyz2mol_b.py ./acetate.xyz --charge -1
   #+end_src
-  
+
+  For an easier systemwide deployment, the [[https://github.com/nbehrnd/xyz2mol_b/releases][release page]] provides a
+  platform independent Python wheel which in turn resolves
+  dependencies like RDKit and numpy from the PyPI.
+
 * background
-  :PROPERTIES:
-  :ID:       cbc40174-ab61-40ec-958f-531ac97a007c
-  :END:
 
-  Based on an algorithm by Kim and Kim[fn:0], Jan Jensen implemented
-  xyz2mol[fn:1] relying on RDKit.  As presented in 2020 ([[https://www.youtube.com/watch?v=HD6IpXMVKeo][recording]], [[https://github.com/rdkit/UGM_2020/blob/master/Presentations/JanJensen.pdf][pdf slides]]),
-  the approach works best on small molecules which do not carry organometallic
-  bonds.
+  Based on an algorithm by Kim and Kim[fn:Kim], Jan Jensen implemented
+  xyz2mol[fn:1] relying on RDKit to convert .xyz files into .sdf
+  including assignment of bond orders different than one.  As
+  presented in 2020 ([[https://www.youtube.com/watch?v=HD6IpXMVKeo][recording]], [[https://github.com/rdkit/UGM_2020/blob/master/Presentations/JanJensen.pdf][pdf slides]]), the approach works best
+  on small molecules which do not carry organometallic bonds.  With
+  release of RDKit 2022.09.3, this functionality became available in
+  RDKit,[fn:2] and was presented in Greg Landrum's blog,[fn:3] too.
 
-  With release 2202.09.3, the functionality is available in RDKit.[fn:2] This
-  allows a shorter (moderator) script to convert xyz into .sdf provided one
-  actually has access to a version of RDKit modern enough: contrasting to Greg
-  Landrum's blog,[fn:3] RDKit 2022.09.3 as so far packaged for Linux Debian does
-  not yet include this functionality -- according to repology.org,[fn:4] this
-  equally applies to relatives via DebiChem (e.g. Ubuntu ecosystem).  As
-  checked, creating a virtual environment for Python and a pip based
-  installation of RDKit 2023.03.2 (and its dependencies such as numpy) offers
-  one successful bypass.  An alternative environment not tested may be anaconda.
+  This moderator script was written to provide this functionality
+  until RDKit as packaged by DebiChem (for Debian, Ubuntu, etc) would
+  catch up (cf. notes in repology[fn:4]) however can be "handy" for a
+  rapid conversion if one forgot the required syntax in RDKit.
 
-  The script was written in an instance of Linux Debian 13/trixie (branch
-  testing) with Python (version 3.11.4) and pip installed RDKit (2202.09.3).  As
-  inspected with openbabel and Jmol, Jan Jensen's four test structures pass the
-  conversion.
+* user notes
 
-  |                        |    <r> |
-  | file name              | charge |
-  |------------------------+--------|
-  | acetate.xyz            |     -1 |
-  | ethane.xyz             |      0 |
-  | propylbenzene.xyz      |      1 |
-  | stereogenic_center.xyz |      0 |
-
-[fn:0] Kim, Y and Kim, W. Y. Universal Structure Conversion Method for Organic
-    Molecules: From Atomic Connectivity to Three-Dimensional Geometry.
-    /Bull. Korean Chem. Soc./ *2015*, /36/, 1769-1777, [[https://doi.org/10.1002/bkcs.10334][doi 10.1002/bkcs.10334]].
+  By default, the submitted structure in the input .xyz file is
+  presumed to be balanced and overall neutral (e.g., =ethane.xyz= in
+  subfolder =tests=).  The implementation equally is capable to
+  "recover" a .sdf file of charged structures like the acetate anion
+  (file =acetate.xyz=), or tetrabutylammonium (file =tbab_cation.xyz=)
+  for which the user is required to explicitly assign the overall
+  charge.  As one can check with file =C9H11.xyz=, one input file can
+  lead to both a .sdf file of a cation (=--charge 1=), and anion (=-c
+  -1=).[fn:Hill]
+  
+[fn:Kim] Kim, Y and Kim, W. Y. Universal Structure Conversion Method
+    for Organic Molecules: From Atomic Connectivity to
+    Three-Dimensional Geometry.  /Bull. Korean Chem. Soc./ *2015*,
+    /36/, 1769-1777, [[https://doi.org/10.1002/bkcs.10334][doi 10.1002/bkcs.10334]].
 [fn:1] https://github.com/jensengroup/xyz2mol
 [fn:2] https://github.com/jensengroup/xyz2mol/issues/40
 [fn:3] https://greglandrum.github.io/rdkit-blog/posts/2022-12-18-introducing-rdDetermineBonds.html
 [fn:4] https://repology.org/project/rdkit/packages
+[fn:Hill] The same Hill formula equally applies to the neutral
+2-phenyl-2-propyl radical, PubChem [[https://pubchem.ncbi.nlm.nih.gov/compound/140141][CID 140141]].

@@ -1,3 +1,5 @@
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+
 # intent
 
 Given an input structure as .xyz file, the moderator script
@@ -18,37 +20,39 @@ and eventually use the script in a pattern like
 python ./xyz2mol_b.py ./acetate.xyz --charge -1
 ```
 
+For an easier systemwide deployment, the [release
+page](https://github.com/nbehrnd/xyz2mol_b/releases) provides a platform
+independent Python wheel which in turn resolves dependencies like RDKit
+and numpy from the PyPI.
+
 # background
 
 Based on an algorithm by Kim and Kim[^2], Jan Jensen implemented
-xyz2mol[^3] relying on RDKit. As presented in 2020
+xyz2mol[^3] relying on RDKit to convert .xyz files into .sdf including
+assignment of bond orders different than one. As presented in 2020
 ([recording](https://www.youtube.com/watch?v=HD6IpXMVKeo), [pdf
 slides](https://github.com/rdkit/UGM_2020/blob/master/Presentations/JanJensen.pdf)),
 the approach works best on small molecules which do not carry
-organometallic bonds.
+organometallic bonds. With release of RDKit 2022.09.3, this
+functionality became available in RDKit,[^4] and was presented in Greg
+Landrum's blog,[^5] too.
 
-With release 2202.09.3, the functionality is available in RDKit.[^4]
-This allows a shorter (moderator) script to convert xyz into .sdf
-provided one actually has access to a version of RDKit modern enough:
-contrasting to Greg Landrum's blog,[^5] RDKit 2022.09.3 as so far
-packaged for Linux Debian does not yet include this functionality –
-according to repology.org,[^6] this equally applies to relatives via
-DebiChem (e.g. Ubuntu ecosystem). As checked, creating a virtual
-environment for Python and a pip based installation of RDKit 2023.03.2
-(and its dependencies such as numpy) offers one successful bypass. An
-alternative environment not tested may be anaconda.
+This moderator script was written to provide this functionality until
+RDKit as packaged by DebiChem (for Debian, Ubuntu, etc) would catch up
+(cf. notes in repology[^6]) however can be "handy" for a rapid
+conversion if one forgot the required syntax in RDKit.
 
-The script was written in an instance of Linux Debian 13/trixie (branch
-testing) with Python (version 3.11.4) and pip installed RDKit
-(2202.09.3). As inspected with openbabel and Jmol, Jan Jensen's four
-test structures pass the conversion.
+# user notes
 
-| file name              | charge |
-|------------------------|-------:|
-| acetate.xyz            |     -1 |
-| ethane.xyz             |      0 |
-| propylbenzene.xyz      |      1 |
-| stereogenic_center.xyz |      0 |
+By default, the submitted structure in the input .xyz file is presumed
+to be balanced and overall neutral (e.g., `ethane.xyz` in subfolder
+`tests`). The implementation equally is capable to "recover" a .sdf file
+of charged structures like the acetate anion (file `acetate.xyz`), or
+tetrabutylammonium (file `tbab_cation.xyz`) for which the user is
+required to explicitly assign the overall charge. As one can check with
+file `C9H11.xyz`, one input file can lead to both a .sdf file of a
+cation (`--charge 1`), and anion (`-c
+  -1`).[^7]
 
 [^1]: <https://github.com/jensengroup/xyz2mol>
 
@@ -64,3 +68,7 @@ test structures pass the conversion.
 [^5]: <https://greglandrum.github.io/rdkit-blog/posts/2022-12-18-introducing-rdDetermineBonds.html>
 
 [^6]: <https://repology.org/project/rdkit/packages>
+
+[^7]: The same Hill formula equally applies to the neutral
+    2-phenyl-2-propyl radical, PubChem [CID
+    140141](https://pubchem.ncbi.nlm.nih.gov/compound/140141).
