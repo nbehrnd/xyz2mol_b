@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# the sequence of entries below follows the example on
+# https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+# as visited on [2025-03-27 Thu]
+
+[project]
+name = "xyz2mol_b"
+version = "0.1.0"
+dependencies = ["rdkit"]
+requires-python = ">=3.10"
+authors = [
+    { name="Norwid Behrnd", email="nbehrnd@yahoo.com" }
+]
+description = "recreate a .sdf file from .xyz file with RDKit and xyz2mol"
+readme = "README.md"
+
+license-files = ["LICENSE"]
+keywords = ["RDKit"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3 :: Only",
+    "Environment :: Console",
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Science/Research",
+    "Topic :: File Formats",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/nbehrnd/xyz2mol_b"
+
+[project.scripts]
+xyz2mol_b = "xyz2mol_b:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.setuptools.package-data]
+"xyz2mol_b" = ["docs/README.md", "tests/*.xyz"]
