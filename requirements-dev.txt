@@ -1,8 +1,8 @@
-# This provides an optional environment to develop and check the Python
-# scripts by git pre-commit hooks.  See file `.pre-commit-config.yaml`
-# of this project for additional details.  The update of the molecules'
-# cluster labels ("the normal use of the script") remains independent
-# of these packages hosted on PyPI.
+-r requirements.txt
+
+# The next entries provide the optional development environment, including
+# git pre-commit hooks.  See file `.pre-commit-config.yaml` of this project
+# for additional details.
 
 pre-commit
 black
