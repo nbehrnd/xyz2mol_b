@@ -20,7 +20,7 @@ import subprocess
 
 import pytest
 
-PRG = "xyz2mol_b.py"
+PRG = "xyz2mol_b/__init__.py"
 
 
 def test_script_exists():
