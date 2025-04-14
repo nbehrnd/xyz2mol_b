@@ -3,6 +3,7 @@
 # The next entries provide the optional development environment, including
 # git pre-commit hooks.  See file `.pre-commit-config.yaml` of this project
 # for additional details.
+pytest
 
 pre-commit
 black
