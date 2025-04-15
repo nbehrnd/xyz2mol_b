@@ -6,7 +6,7 @@
 # author:  nbehrnd@yahoo.com
 # license: GPL v2, 2025
 # date:    [2025-04-14 Mon]
-# edit:
+# edit:    [2025-04-15 Tue]
 
 """pytest script of xyz2mol_b.py
 
@@ -36,8 +36,9 @@ def test_script_exists():
 # without proper import of of xyz2mol's functions.
 #
 # The checks probe the recovery of the neutral ethane molecule, acetate anion,
-# and tetrabutylammonium cation (chiefly `tbab_cation`) the .xyz files store
+# and tetramethylammonium cation (chiefly `NMe4_cation`) the .xyz files store
 # without bond information as either neutral molecule, anion, or cation.
+
 
 @pytest.mark.ethane
 def test_neutral_ethane():
@@ -72,6 +73,7 @@ def test_neutral_ethane_b():
         not in result.stdout
     )
 
+
 @pytest.mark.ethane
 def test_neutral_ethane_c():
     """probe recovery of ethane as neutral molecule"""
@@ -87,6 +89,7 @@ def test_neutral_ethane_c():
         "The total charge -c is incompatible with bond orders assigned."
         not in result.stdout
     )
+
 
 @pytest.mark.ethane
 def test_negative_ethane():
@@ -104,6 +107,7 @@ def test_negative_ethane():
         in result.stdout
     )
 
+
 @pytest.mark.acetate
 def test_neutral_acetate():
     """probe recovery of acetate as a neutral molecule"""
@@ -119,6 +123,7 @@ def test_neutral_acetate():
         "The total charge -c is incompatible with bond orders assigned."
         in result.stdout
     )
+
 
 @pytest.mark.acetate
 def test_negative_acetate():
@@ -136,6 +141,7 @@ def test_negative_acetate():
         not in result.stdout
     )
 
+
 @pytest.mark.acetate
 def test_positive_acetate():
     """probe recovery of acetate as a cation"""
@@ -152,10 +158,11 @@ def test_positive_acetate():
         in result.stdout
     )
 
-@pytest.mark.tbab
-def test_neutral_tbab_cation():
-    """probe recovery of tbab_cation as a neutral molecule"""
-    input_file = os.path.join("tests", "tbab_cation.xyz")
+
+@pytest.mark.NMe4
+def test_neutral_NMe4_cation():
+    """probe recovery of NMe4_cation as a neutral molecule"""
+    input_file = os.path.join("tests", "NMe4_cation.xyz")
     result = subprocess.run(
         f"python {PRG} {input_file}",
         shell=True,
@@ -168,10 +175,11 @@ def test_neutral_tbab_cation():
         in result.stdout
     )
 
-@pytest.mark.tbab
-def test_negative_tbab_cation():
-    """probe recovery of tbab_cation as an anion"""
-    input_file = os.path.join("tests", "tbab_cation.xyz")
+
+@pytest.mark.NMe4
+def test_negative_NMe4_cation():
+    """probe recovery of NMe4_cation as an anion"""
+    input_file = os.path.join("tests", "NMe4_cation.xyz")
     result = subprocess.run(
         f"python {PRG} {input_file} -c -1",
         shell=True,
@@ -184,10 +192,11 @@ def test_negative_tbab_cation():
         in result.stdout
     )
 
-@pytest.mark.tbab
-def test_positive_tbab_cation():
-    """probe recovery of tbab_cation as a cation"""
-    input_file = os.path.join("tests", "tbab_cation.xyz")
+
+@pytest.mark.NMe4
+def test_positive_NMe4_cation():
+    """probe recovery of NMe4_cation as a cation"""
+    input_file = os.path.join("tests", "NMe4_cation.xyz")
     result = subprocess.run(
         f"python {PRG} {input_file} -c 1",
         shell=True,
