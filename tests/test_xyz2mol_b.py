@@ -252,6 +252,50 @@ def test_negative_NMe4_cation():
 def test_positive_NMe4_cation():
     """probe recovery of NMe4_cation as a cation"""
     input_file = os.path.join("tests", "NMe4_cation.xyz")
+    expected_output = """
+
+     RDKit          3D
+
+ 17 16  0  0  0  0  0  0  0  0999 V2000
+    1.0681    0.0726    0.0097 N   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5628   -1.3045    0.3921 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5628    1.0923    1.0111 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.5628    0.4299   -1.3741 C   0  0  0  0  0  0  0  0  0  0  0  0
+    2.5840    0.0726    0.0097 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374   -1.5441    1.3922 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5315   -1.2844    0.3866 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374   -2.0255   -0.3412 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374    2.0782    0.7186 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5315    1.0775    0.9965 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374    0.8177    2.0021 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374    1.4255   -1.6319 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9374   -0.3164   -2.0817 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5315    0.4247   -1.3539 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.9291   -0.1871    1.0154 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.9291   -0.6685   -0.7180 H   0  0  0  0  0  0  0  0  0  0  0  0
+    2.9291    1.0734   -0.2682 H   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0
+  3  1  1  0
+  4  1  1  0
+  5  1  1  0
+  6  2  1  0
+  7  2  1  0
+  8  2  1  0
+  9  3  1  0
+ 10  3  1  0
+ 11  3  1  0
+ 12  4  1  0
+ 13  4  1  0
+ 14  4  1  0
+ 15  5  1  0
+ 16  5  1  0
+ 17  5  1  0
+M  CHG  1   1   1
+M  END
+
+    """
+    expected_lines = expected_output.strip().splitlines()
+
     result = subprocess.run(
         f"python {PRG} {input_file} -c 1",
         shell=True,
@@ -259,7 +303,10 @@ def test_positive_NMe4_cation():
         capture_output=True,
         text=True,
     )
+    reported_lines = result.stdout.strip().splitlines()
+
     assert (
         "The total charge -c is incompatible with bond orders assigned."
         not in result.stdout
     )
+    assert reported_lines == expected_lines, "mismatch sdf output"
