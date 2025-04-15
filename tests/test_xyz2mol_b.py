@@ -42,8 +42,33 @@ def test_script_exists():
 
 @pytest.mark.ethane
 def test_neutral_ethane():
-    """probe recovery of ethane as neutral molecule"""
+    """probe recovery of ethane as an implicitly neutral molecule"""
     input_file = os.path.join("tests", "ethane.xyz")
+    expected_output = """
+
+     RDKit          3D
+
+  8  7  0  0  0  0  0  0  0  0999 V2000
+   -4.5873    0.9270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1105    0.9270    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9379    1.7888    0.5806 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9379   -0.0068    0.4561 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9379    0.9989   -1.0367 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7600    0.8550    1.0367 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7600    1.8607   -0.4561 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7600    0.0651   -0.5806 H   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0
+  3  1  1  0
+  4  1  1  0
+  5  1  1  0
+  6  2  1  0
+  7  2  1  0
+  8  2  1  0
+M  END
+
+    """
+    expected_lines = expected_output.strip().splitlines()
+
     result = subprocess.run(
         f"python {PRG} {input_file}",
         shell=True,
@@ -51,15 +76,18 @@ def test_neutral_ethane():
         capture_output=True,
         text=True,
     )
+    reported_lines = result.stdout.strip().splitlines()
+
     assert (
         "The total charge -c is incompatible with bond orders assigned."
         not in result.stdout
-    )
+    ), "error note issued by the script"
+    assert reported_lines == expected_lines, "mismatch sdf output"
 
 
 @pytest.mark.ethane
 def test_neutral_ethane_b():
-    """probe recovery of ethane as neutral molecule"""
+    """probe recovery of ethane as an explicitly neutral molecule"""
     input_file = os.path.join("tests", "ethane.xyz")
     result = subprocess.run(
         f"python {PRG} {input_file} -c 0",
