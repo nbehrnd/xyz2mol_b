@@ -198,6 +198,56 @@ M  END
 
 
 @pytest.mark.acetate
+def test_negative_acetate_sdfV3000():
+    """probe recovery of acetate as an anion"""
+    input_file = os.path.join("tests", "acetate.xyz")
+    expected_output = """
+
+     RDKit          3D
+
+  0  0  0  0  0  0  0  0  0  0999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 7 6 0 0 0
+M  V30 BEGIN ATOM
+M  V30 1 C -4.716860 0.899190 0.057140 0
+M  V30 2 C -3.248980 0.984000 -0.228300 0
+M  V30 3 H -5.041670 1.743840 0.678620 0
+M  V30 4 H -5.017100 -0.022050 0.563440 0
+M  V30 5 H -5.210760 0.968740 -0.912080 0
+M  V30 6 O -2.659090 2.057020 -0.340250 0
+M  V30 7 O -2.634130 -0.187020 -0.486790 0 CHG=-1
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 1 2 1
+M  V30 2 1 3 1
+M  V30 3 1 4 1
+M  V30 4 1 5 1
+M  V30 5 2 6 2
+M  V30 6 1 7 2
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+
+    """
+    expected_lines = expected_output.strip().splitlines()
+
+    result = subprocess.run(
+        f"python {PRG} {input_file} -c -1 --x3",
+        shell=True,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    reported_lines = result.stdout.strip().splitlines()
+
+    assert (
+        "The total charge -c is incompatible with bond orders assigned."
+        not in result.stdout
+    ), "error note issued by the script"
+    assert reported_lines == expected_lines, "mismatch sdf output"
+
+
+@pytest.mark.acetate
 def test_positive_acetate():
     """probe recovery of acetate as a cation"""
     input_file = os.path.join("tests", "acetate.xyz")
