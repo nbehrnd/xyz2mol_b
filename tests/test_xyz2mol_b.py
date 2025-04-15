@@ -157,6 +157,30 @@ def test_neutral_acetate():
 def test_negative_acetate():
     """probe recovery of acetate as an anion"""
     input_file = os.path.join("tests", "acetate.xyz")
+    expected_output = """
+
+     RDKit          3D
+
+  7  6  0  0  0  0  0  0  0  0999 V2000
+   -4.7169    0.8992    0.0571 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2490    0.9840   -0.2283 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0417    1.7438    0.6786 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0171   -0.0221    0.5634 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2108    0.9687   -0.9121 H   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6591    2.0570   -0.3402 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6341   -0.1870   -0.4868 O   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0
+  3  1  1  0
+  4  1  1  0
+  5  1  1  0
+  6  2  2  0
+  7  2  1  0
+M  CHG  1   7  -1
+M  END
+
+    """
+    expected_lines = expected_output.strip().splitlines()
+
     result = subprocess.run(
         f"python {PRG} {input_file} -c -1",
         shell=True,
@@ -164,10 +188,13 @@ def test_negative_acetate():
         capture_output=True,
         text=True,
     )
+    reported_lines = result.stdout.strip().splitlines()
+
     assert (
         "The total charge -c is incompatible with bond orders assigned."
         not in result.stdout
-    )
+    ), "error note issued by the script"
+    assert reported_lines == expected_lines, "mismatch sdf output"
 
 
 @pytest.mark.acetate
