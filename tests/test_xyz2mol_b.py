@@ -6,7 +6,7 @@
 # author:  nbehrnd@yahoo.com
 # license: GPL v2, 2025
 # date:    [2025-04-14 Mon]
-# edit:    [2025-04-15 Tue]
+# edit:    [2025-05-02 Fri]
 
 """pytest script of xyz2mol_b.py
 
@@ -20,7 +20,7 @@ import subprocess
 
 import pytest
 
-PRG = "xyz2mol_b/__init__.py"
+PRG = "src/xyz2mol_b/xyz2mol_b.py"
 
 
 def test_script_exists():

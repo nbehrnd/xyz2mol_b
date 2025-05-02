@@ -9,7 +9,6 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "xyz2mol_b"
 version = "0.2.0"
-dependencies = ["rdkit"]
 requires-python = ">=3.10"
 authors = [
     { name="Norwid Behrnd", email="nbehrnd@yahoo.com" }
@@ -31,15 +30,21 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
 ]
+dependencies = ["rdkit"]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "flake8",
+    "pre-commit",
+    "pytest",
+]
 
 [project.urls]
 Homepage = "https://github.com/nbehrnd/xyz2mol_b"
 
 [project.scripts]
-xyz2mol_b = "xyz2mol_b:main"
-
-[tool.setuptools.packages.find]
-where = ["."]
+xyz2mol_b = "xyz2mol_b.xyz2mol_b:main"
 
 [tool.setuptools.package-data]
 "xyz2mol_b" = ["docs/README.md", "tests/*.xyz"]
