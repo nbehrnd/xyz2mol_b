@@ -4,7 +4,7 @@ name   : xyz2mol_b.py
 author : nbehrnd@yahoo.com
 license: GPL2
 date   : [2023-08-08 Tue]
-edit   : [2025-04-14 Mon]
+edit   : [2025-04-15 Tue]
 purpose: a modernized xyz2mol interface to RDKit 2023.03.2, or greater
 """
 
@@ -22,7 +22,9 @@ def get_args():
         description="""
 Convert a .xyz file into a .sdf file.  This is a moderator to Jan Jensen's
 xyz2mol, a functionality which eventually was included into RDKit.  Processing
-requires RDKit version 2023.03.2, or greater.""",
+requires RDKit version 2023.03.2, or greater.  By default, small molecules with
+less than 999 atoms are reported in the syntax of sdf (V2000); the optional
+flag `--x3` allows to use the syntax of sdf (V3000) instead.""",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
@@ -43,6 +45,12 @@ requires RDKit version 2023.03.2, or greater.""",
         default=0,
     )
 
+    parser.add_argument(
+        "--x3",
+        help="report structure in syntax of .sdf (V3000)",
+        action="store_true",
+    )
+
     return parser.parse_args()
 
 
@@ -56,7 +64,10 @@ def main():
 
     try:
         rdkit.Chem.rdDetermineBonds.DetermineBonds(mol, charge=args.charge)
-        print(Chem.MolToMolBlock(mol))
+        if args.x3:
+            print(Chem.MolToMolBlock(mol, forceV3000=True))
+        else:
+            print(Chem.MolToMolBlock(mol))
     except ValueError:
         print("The total charge -c is incompatible with bond orders assigned.")
 
