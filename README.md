@@ -36,7 +36,7 @@ to be balanced and overall neutral (see for instance `ethane.xyz` in
 subfolder `tests`). Call e.g.,
 
 ``` shell
-$ cat ethane.xyz 
+$ cat ethane.xyz
 8
 charge 0, ethane
 C         -4.58735        0.92696        0.00000
