@@ -1,0 +1,41 @@
+name: CI_wheel
+
+# name:    build_wheel.yml
+# purpose: build a .whl as an artifact without a secret/GitHub token
+# date:    [2025-07-31 Thu]
+# edit:    [2026-06-28 Sun]
+
+on:
+  workflow_dispatch:  # launch only by the manual trigger
+    branches:
+      - dev
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 10
+
+    steps:
+    - name: checkout of the local repository
+      uses: actions/checkout@v7
+
+    - name: set up Python
+      uses: actions/setup-python@v6.2.0  # see https://github.com/actions
+      with:
+        python-version: "3.x"
+
+    - name: provide a virtual environment, resolve dependencies, then build
+      run: |
+        pip install .
+        pip install build
+        python -m build
+
+    - name: package archive `xyz2mol_b.zip`
+      uses: actions/upload-artifact@v7
+      with:
+        name: xyz2mol_b
+        path: |
+          dist/*.whl
+          dist/*.tar.gz

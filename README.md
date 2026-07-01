@@ -21,7 +21,7 @@ If you get a copy by cloning / downloading a .zip archive from GitHub,
 resolve the dependencies with
 
 ``` shell
-pip -r install requirements.txt
+pip install .
 ```
 
 For an easier systemwide deployment, the [release
