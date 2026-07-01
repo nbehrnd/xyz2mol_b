@@ -96,4 +96,3 @@ skip-magic-trailing-comma = false
 
 [tool.codespell]
 skip = "*.xyz"
-

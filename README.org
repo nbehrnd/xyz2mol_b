@@ -32,13 +32,13 @@ pip -r install requirements.txt
   dependencies like RDKit and numpy from the PyPI.
 
 * intended use
-  
+
   By default, the submitted structure in the input .xyz file is
   presumed to be balanced and overall neutral (see for instance
   =ethane.xyz= in subfolder =tests=).  Call e.g.,
 
   #+begin_src shell :results nil :tangle no
-    $ cat ethane.xyz 
+    $ cat ethane.xyz
     8
     charge 0, ethane
     C         -4.58735        0.92696        0.00000
@@ -161,7 +161,7 @@ pip -r install requirements.txt
   with file =C9H11.xyz= in the =tests= subfolder, one input file can
   lead to both a .sdf file of a cation (=--charge 1=), and anion (=-c
   -1=).[fn:Hill]
-  
+
 [fn:Kim] Kim, Y and Kim, W. Y. Universal Structure Conversion Method
     for Organic Molecules: From Atomic Connectivity to
     Three-Dimensional Geometry.  /Bull. Korean Chem. Soc./ *2015*,

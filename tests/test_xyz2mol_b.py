@@ -131,8 +131,7 @@ def test_negative_ethane():
         text=True,
     )
     assert (
-        "The total charge -c is incompatible with bond orders assigned."
-        in result.stdout
+        "The total charge -c is incompatible with bond orders assigned." in result.stdout
     )
 
 
@@ -148,8 +147,7 @@ def test_neutral_acetate():
         text=True,
     )
     assert (
-        "The total charge -c is incompatible with bond orders assigned."
-        in result.stdout
+        "The total charge -c is incompatible with bond orders assigned." in result.stdout
     )
 
 
@@ -259,8 +257,7 @@ def test_positive_acetate():
         text=True,
     )
     assert (
-        "The total charge -c is incompatible with bond orders assigned."
-        in result.stdout
+        "The total charge -c is incompatible with bond orders assigned." in result.stdout
     )
 
 
@@ -276,8 +273,7 @@ def test_neutral_NMe4_cation():
         text=True,
     )
     assert (
-        "The total charge -c is incompatible with bond orders assigned."
-        in result.stdout
+        "The total charge -c is incompatible with bond orders assigned." in result.stdout
     )
 
 
@@ -293,8 +289,7 @@ def test_negative_NMe4_cation():
         text=True,
     )
     assert (
-        "The total charge -c is incompatible with bond orders assigned."
-        in result.stdout
+        "The total charge -c is incompatible with bond orders assigned." in result.stdout
     )
 
 
