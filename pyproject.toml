@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=42"]
 build-backend = "setuptools.build_meta"
 
 # the sequence of entries below follows the example on
@@ -17,27 +17,44 @@ description = "recreate a .sdf file from .xyz file with RDKit and xyz2mol"
 readme = "README.md"
 
 license-files = ["LICENSE"]
+license = "GPL-2.0-only"
 keywords = ["RDKit"]
+
+# https://pypi.org/classifiers/
 classifiers = [
     "Development Status :: 4 - Beta",
-    "Programming Language :: Python :: 3 :: Only",
     "Environment :: Console",
+    "Intended Audience :: Education",
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: File Formats",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Chemistry",
-    "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-    "Operating System :: OS Independent",
 ]
 dependencies = ["rdkit>=2023.03.2"]
 
 [project.optional-dependencies]
 dev = [
-    "black",
-    "flake8",
-    "pre-commit",
-    "pytest",
+    "black>=26.5.1",
+    "flake8>=7.3.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.5.1",
+    "flake8>=7.3.0",
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
 ]
 
 [project.urls]
@@ -48,3 +65,35 @@ xyz2mol_b = "xyz2mol_b.xyz2mol_b:main"
 
 [tool.setuptools.package-data]
 "xyz2mol_b" = ["docs/README.md", "tests/*.xyz"]
+
+[tool.pytest]
+pythonpath = ["src"]
+testpaths = ["tests"]
+filterwarnings = ["ignore::pytest.PytestCacheWarning"]
+markers = [
+    "ethane:  tests on the neutral ethane molecule",
+    "acetate: tests on the acetate anion",
+    "NMe4:    tests on the tetramethylammonium cation",
+]
+
+minversion = "9"
+log_level = "INFO"
+strict = true
+addopts = ["-ra"]
+
+[tool.ruff]
+line-length = 90
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+[tool.codespell]
+skip = "*.xyz"
+
