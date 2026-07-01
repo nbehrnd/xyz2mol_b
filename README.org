@@ -24,7 +24,7 @@
   GitHub, resolve the dependencies with
 
   #+begin_src shell :results nil :tangle no
-pip -r install requirements.txt
+pip install .
   #+end_src
 
   For an easier systemwide deployment, the [[https://github.com/nbehrnd/xyz2mol_b/releases][release page]] provides a
