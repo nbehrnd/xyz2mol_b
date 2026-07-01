@@ -30,7 +30,7 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
     "Operating System :: OS Independent",
 ]
-dependencies = ["rdkit"]
+dependencies = ["rdkit>=2023.03.2"]
 
 [project.optional-dependencies]
 dev = [
